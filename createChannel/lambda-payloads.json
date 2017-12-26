@@ -1,0 +1,12 @@
+{
+    "createChannel": {
+        "lambda": {
+            "queueName": "test1"
+        }
+    },
+    "createQueue": {
+        "lambda": {
+            "queueName": "test2-1653"
+        }
+    }
+}
