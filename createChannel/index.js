@@ -6,7 +6,7 @@ const aws = require('aws-sdk');
 
 const sqs = new aws.SQS({apiVersion: '2012-11-05'});
 
-var s3 = new aws.S3({apiVersion: '2006-03-01'});
+const s3 = new aws.S3({apiVersion: '2006-03-01'});
 
 exports.handler = (event, context, callback) => {
     
@@ -25,7 +25,7 @@ exports.handler = (event, context, callback) => {
     
     console.log("clientID = " + JSON.stringify(context.identity));
     
-    event.queueName = "Clinicoin-"+event.queueName;
+    event.queueName = "Clinicoin-Mosio-"+event.queueName;
     
 
     console.log("Create queue: "+event.queueName);
@@ -37,17 +37,20 @@ exports.handler = (event, context, callback) => {
     };
     const queue_promise = sqs.createQueue(queue_params).promise();
 
-
+    /*
     console.log("Create s3 bucket: "+event.queueName);
-    var s3_params = {
-        Bucket: event.queueName
+    const s3_params = {
+        Bucket: event.queueName,
+        GrantWriteACP: 'EmailAddress=a101@mailinator.com'
     };
     const s3_promise = s3.createBucket(s3_params).promise();
+    */
     
     Promise.all([
-        s3_promise,
+        //s3_promise,
         queue_promise
-    ]).then(() => {
+    ])
+    .then(() => {
         const response = {
             "statusCode": 200,
             "headers": {

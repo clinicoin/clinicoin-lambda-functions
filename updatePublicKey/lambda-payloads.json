@@ -1,0 +1,9 @@
+{
+    "updatePublicKey": {
+        "lambda": {
+            "username": "testuser",
+            "publicKey": "test1",
+            "sub": "subvalue"
+        }
+    }
+}

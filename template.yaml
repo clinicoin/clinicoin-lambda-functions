@@ -10,3 +10,27 @@ Resources:
       Description: ''
       MemorySize: 128
       Timeout: 15
+  deleteUser:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: deleteUser/index.handler
+      Runtime: nodejs6.10
+      Description: ''
+      MemorySize: 128
+      Timeout: 15
+  getPublicKey:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: getPublicKey/index.handler
+      Runtime: nodejs6.10
+      Description: ''
+      MemorySize: 128
+      Timeout: 15
+  updatePublicKey:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: updatePublicKey/index.handler
+      Runtime: nodejs6.10
+      Description: ''
+      MemorySize: 128
+      Timeout: 15

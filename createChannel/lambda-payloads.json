@@ -6,7 +6,7 @@
     },
     "createQueue": {
         "lambda": {
-            "queueName": "test2-1653"
+            "queueName": "test1255"
         }
     }
 }
