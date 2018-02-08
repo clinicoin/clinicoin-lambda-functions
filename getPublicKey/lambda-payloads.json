@@ -1,7 +1,0 @@
-{
-    "getPublicKey": {
-        "lambda": {
-            "username": "testuser"
-        }
-    }
-}

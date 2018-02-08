@@ -17,28 +17,42 @@ exports.handler = (event, context, callback) => {
       "isBase64Encoded": false
     };
     
+
+    if (event.publicKey == "" || event.publicKey == undefined || event.publicKey == null) {
+        console.log('No public key');
+        response.body = "updatePublicKey failed: invalid key";
+        callback(null, response);
+        return;
+    }
+    
     if (event.username == "" || event.username == undefined || event.username == null) {
         console.log('No username');
         response.body = "updatePublicKey failed: no username";
         callback(null, response);
         return;
     }
-    
+
     var params = {
-      Key: { "UserId": { S: event.username } },
-      TableName: "ClinicoinDirectory"
+      TableName: 'ClinicoinDirectory',
+      Item: {
+        'UserId': {S: event.username },
+        'PublicKey' : {S: event.publicKey},
+        'Sub' : {S: event.sub},
+        'Phone' : {S: event.phone},
+        'Email' : {S: event.email},
+      }
     };
 
-    ddb.getItem(params, function(err, data) {
+    // Call DynamoDB to add the item to the table
+    ddb.putItem(params, function(err, data) {
       if (err) {
         console.log(err);
-        response.body = "public key retrieve failed: "+err.message;
+        response.body = "putItem failed: "+err.message;
       } else {
-        console.log('retrieve success');
+        console.log('Update success');
         response.statusCode = 200;
-        response.body = data.Item;
+        response.body = "value updated";
       }
       callback(null, response);
     });
-
 };

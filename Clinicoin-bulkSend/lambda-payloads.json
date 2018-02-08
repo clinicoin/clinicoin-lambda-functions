@@ -1,0 +1,9 @@
+{
+    "Clinicoin-bulkSend": {
+        "lambda": {
+            "data": "data to send",
+            "sender": "demouser",
+            "destinations": "test806557,test810935,test896383,test947934,test961162"
+        }
+    }
+}

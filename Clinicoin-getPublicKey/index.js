@@ -17,40 +17,35 @@ exports.handler = (event, context, callback) => {
       "isBase64Encoded": false
     };
     
-
-    if (event.publicKey == "" || event.publicKey == undefined || event.publicKey == null) {
-        console.log('No public key');
-        response.body = "updatePublicKey failed: invalid key";
-        callback(null, response);
-        return;
-    }
-    
     if (event.username == "" || event.username == undefined || event.username == null) {
         console.log('No username');
         response.body = "updatePublicKey failed: no username";
         callback(null, response);
         return;
     }
-
+    
     var params = {
-      TableName: 'ClinicoinDirectory',
-      Item: {
-        'UserId': {S: event.username },
-        'PublicKey' : {S: event.publicKey},
-        'Sub' : {S: event.sub},
-      }
+      Key: { "UserId": { S: event.username } },
+      TableName: "ClinicoinDirectory"
     };
 
-    // Call DynamoDB to add the item to the table
-    ddb.putItem(params, function(err, data) {
+    ddb.getItem(params, function(err, data) {
       if (err) {
         console.log(err);
-        response.body = "putItem failed: "+err.message;
+        response.body = "public key retrieve failed: "+err.message;
       } else {
-        console.log('Update success');
-        response.statusCode = 200;
-        response.body = "value updated";
+        console.log("data item: "+data.Item);
+        if (data.Item == null || data.Item == undefined || data.Item.length==0) {
+          response.statusCode = 404;
+          response.body = "user not found";
+        }
+        else {
+          console.log('retrieve success');
+          response.statusCode = 200;
+          response.body = data.Item;
+        }
       }
       callback(null, response);
     });
+
 };

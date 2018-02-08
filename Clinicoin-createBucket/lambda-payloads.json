@@ -1,0 +1,7 @@
+{
+    "Clinicoin-createBucket": {
+        "lambda": {
+            "bucket": "demouser"
+        }
+    }
+}
